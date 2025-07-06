@@ -1,0 +1,76 @@
+<%- include('../partials/head') %>
+  </head>
+  <body class="bg-gradient-to-br from-pink-200 via-yellow-100 to-blue-200 min-h-screen font-sans w-full h-full">
+    <%- include('../partials/nav') %>
+    <%- include('../partials/toast') %>
+    <div class="mt-6 flex justify-center">
+      <div class="w-full max-w-7xl bg-blue-50 bg-pink-100 rounded-3xl shadow-2xl p-10 border-4 border-black">
+        <h2 class="text-5xl font-extrabold text-center text-purple-700 mb-6 tracking-tight drop-shadow-lg border-b-2 border-black pb-4">
+          All Projects in Database
+        </h2>
+        <div class="flex justify-center px-4">
+          <div class="overflow-x-auto w-full">
+            <table class="min-w-full bg-white/80 rounded-2xl shadow-xl">
+              <thead>
+                <tr>
+                  <th class="px-6 py-4 text-left text-pink-700 font-bold text-lg">Title</th>
+                  <th class="px-6 py-4 text-left text-yellow-700 font-bold text-lg">Technologies</th>
+                  <th class="px-6 py-4 text-left text-blue-700 font-bold text-lg">Submitted</th>
+                  <th class="px-6 py-4 text-left text-green-700 font-bold text-lg">Status</th>
+                  <th class="px-6 py-4 text-left text-gray-700 font-bold text-lg">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% students.forEach(student => { %>
+                <tr class="border-b border-gray-200 hover:bg-yellow-50 transition duration-200">
+                  <td class="px-6 py-4 font-semibold text-pink-900 text-base"><%= student.title %></td>
+                  <td class="px-6 py-4">
+                    <div class="flex flex-wrap gap-2">
+                      <% student.technologiesUsed.forEach(tech => { %>
+                        <span class="bg-gradient-to-r from-yellow-200 via-pink-100 to-blue-100 text-yellow-900 px-3 py-1 rounded-full text-xs font-semibold border border-yellow-300 shadow-sm">
+                          <%= tech %>
+                        </span>
+                      <% }) %>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 text-xs text-gray-500">
+                    <%= new Date(student.createdAt).toLocaleDateString('en-US', { dateStyle: 'medium' }) %>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span class="inline-flex items-center gap-1 text-xs font-semibold px-4 py-1 rounded-full shadow border
+                      <% if (student.status === 'approved') { %>
+                        bg-green-100 text-green-700 border-green-300
+                      <% } else if (student.status === 'pending') { %>
+                        bg-yellow-100 text-yellow-700 border-yellow-300
+                      <% } else if (student.status === 'rejected') { %>
+                        bg-red-100 text-red-700 border-red-300
+                      <% } else { %>
+                        bg-gray-100 text-gray-500 border-gray-300
+                      <% } %>
+                    ">
+                      <%= student.status.charAt(0).toUpperCase() + student.status.slice(1) %>
+                    </span>
+                  </td>
+                  <td class="px-6 py-4">
+                    <form action="/update-status" method="POST" class="flex items-center gap-3">
+                      <input type="hidden" name="projectId" value="<%= student._id %>">
+                      <select name="status" class="rounded-lg border border-pink-200 px-3 py-1 focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white text-gray-700 shadow-sm">
+                        <option value="approved" <%= student.status === 'approved' ? 'selected' : '' %>>Approve</option>
+                        <option value="rejected" <%= student.status === 'rejected' ? 'selected' : '' %>>Reject</option>
+                        <option value="pending" <%= student.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                      </select>
+                      <button type="submit" class="bg-gradient-to-r from-pink-500 to-yellow-400 hover:from-pink-600 hover:to-yellow-500 text-white px-4 py-1.5 rounded-lg font-semibold shadow transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-400">
+                        Update
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

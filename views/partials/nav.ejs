@@ -1,0 +1,97 @@
+<header class="bg-gradient-to-r from-indigo-900 via-purple-700 to-pink-400 text-white shadow-lg">
+  <nav class="container mx-auto flex justify-between items-center py-4 px-6">
+    <!-- Logo / Brand -->
+    <div class="flex items-center space-x-2">
+      <a
+        href="/"
+        class="text-3xl font-extrabold tracking-wide transition duration-300 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-900 bg-clip-text text-transparent drop-shadow-lg font-cursive"
+        style="font-family: cursive"
+      >
+        <span class="text-pink-300 animate-pulse">Project</span><span class="bg-gradient-to-r from-yellow-300 to-pink-500 bg-clip-text text-transparent ml-1">Dock</span>
+      </a>
+    </div>
+    <!-- Navigation Links -->
+     
+    <ul class="flex items-center space-x-2 md:space-x-6 font-medium">
+      <li>
+        <a
+          href="/about"
+          class="py-2 px-4 rounded-lg transition duration-300 <%= currentPage === 'AboutUs' ? 'bg-white text-pink-600 shadow' : 'hover:bg-white hover:text-pink-600' %>"
+          >Home</a
+        >
+      </li>
+      <li>
+        <a
+          href="/"
+          class="py-2 px-4 rounded-lg transition duration-300 <%= currentPage === 'ViewPost' ? 'bg-white text-pink-600 shadow' : 'hover:bg-white hover:text-pink-600' %>"
+          >View Projects</a
+        >
+      </li>
+      <% if (IsLoggedIn) { %> <% if (user && user.userType === 'admin') { %>
+      <li>
+        <a
+          href="/update-status"
+          class="py-2 px-4 rounded-lg transition duration-300 <%= currentPage === 'favourites' ? 'bg-white text-pink-600 shadow' : 'hover:bg-white hover:text-pink-600' %>"
+          >Update Status</a
+        >
+      </li>
+      <li>
+        <a
+          href="/add-admin"
+          class="py-2 px-4 rounded-lg transition duration-300 <%= currentPage === 'favourites' ? 'bg-white text-pink-600 shadow' : 'hover:bg-white hover:text-pink-600' %>"
+          >Add Admin</a
+        >
+      </li>
+      <% } %> <% if (user && user.userType === 'student') { %>
+      <li>
+        <a
+          href="/host-project-list"
+          class="py-2 px-4 rounded-lg transition duration-300 <%= currentPage === 'host-homes' ? 'bg-white text-pink-600 shadow' : 'hover:bg-white hover:text-pink-600' %>"
+          >Edit/Delete Project</a
+        >
+      </li>
+      <li>
+        <a
+          href="/add-project"
+          class="py-2 px-4 rounded-lg transition duration-300 <%= currentPage === 'AddNewPost' ? 'bg-white text-pink-600 shadow' : 'hover:bg-white hover:text-pink-600' %>"
+          >Upload Project</a
+        >
+      </li>
+      <% } %> <% } %> 
+      <% if (!IsLoggedIn) { %>
+      <li>
+        <a
+          href="/signup"
+          class="py-2 px-4 rounded-lg transition duration-300 hover:bg-white hover:text-pink-600"
+          >Sign Up</a
+        >
+      </li>
+      <li>
+        <a
+          href="/login"
+          class="py-2 px-4 rounded-lg transition duration-300 hover:bg-white hover:text-pink-600"
+          >Login</a
+        >
+      </li>
+      <li>
+        <a
+          href="/admin-login"
+          class="py-2 px-4 rounded-lg transition duration-300 <%= currentPage === 'admin-login' ? 'bg-white text-pink-600 shadow' : 'hover:bg-white hover:text-pink-600' %>"
+          >Admin Login</a
+        >
+      </li>
+      <% } else { %>
+      <li>
+        <form action="/logout" method="POST">
+          <button
+            type="submit"
+            class="py-2 px-4 rounded-lg transition duration-300 hover:bg-white hover:text-pink-600"
+          >
+            Logout
+          </button>
+        </form>
+      </li>
+      <% } %>
+    </ul>
+  </nav>
+</header>

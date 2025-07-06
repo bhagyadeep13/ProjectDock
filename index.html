@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Excel Reader</title>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+  <div class="bg-white p-6 rounded shadow w-full max-w-md text-center">
+    <h1 class="text-xl font-bold mb-4">Upload Excel</h1>
+    <input type="file" id="file" accept=".xlsx,.xls" class="mb-4 border p-2 w-full" />
+    <button id="downloadBtn" class="hidden bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 mb-4">
+      Download Result as JSON
+    </button>
+    <div id="result" class="text-left text-sm max-h-64 overflow-auto"></div>
+  </div>
+
+  <script>
+    let resultData = [];
+
+    file.onchange = e => {
+      const reader = new FileReader();
+      reader.onload = x => {
+        const sheet = XLSX.read(new Uint8Array(x.target.result), { type: 'array' }).Sheets;
+        const json = XLSX.utils.sheet_to_json(sheet[Object.keys(sheet)[0]]);
+
+        const students = json.map(row => {
+          const keys = Object.keys(row);
+          const nameKey = keys.find(k => k.toLowerCase().includes('name'));
+          const enrollKey = keys.find(k => k.toLowerCase().includes('enroll'));
+          return {
+            name: row[nameKey] || '',
+            enrollmentNo: row[enrollKey] || ''
+          };
+        });
+
+        resultData = students; // Save for download
+        downloadBtn.classList.remove('hidden');
+
+        result.innerHTML = `
+          <ul class="list-disc pl-5 space-y-1">
+            ${students.map(s => `<li>${s.name} - ${s.enrollmentNo}</li>`).join('')}
+          </ul>
+        `;
+      };
+      reader.readAsArrayBuffer(e.target.files[0]);
+    };
+
+    document.getElementById('downloadBtn').onclick = () => {
+      const blob = new Blob([JSON.stringify(resultData, null, 2)], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'students_result.json';
+      link.click();
+    };
+  </script>
+</body>
+</html>

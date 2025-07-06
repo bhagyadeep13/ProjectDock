@@ -1,0 +1,127 @@
+<%- include('../partials/head') %>
+</head>
+<body class="bg-gradient-to-br from-pink-200 via-yellow-100 to-blue-200 min-h-screen font-sans antialiased">
+  <%- include('../partials/nav') %>
+  <%- include('../partials/toast') %>
+  <main class="container mx-auto mt-12 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+    <div class="bg-red-300 rounded-3xl shadow-2xl p-10 sm:p-14 w-full max-w-7xl border-4 border-black">
+      
+      <h1 class="text-5xl font-extrabold text-center bg-clip-text bg-blue-500 mb-10 drop-shadow-md opacity-0 animate-slide-fade-in">
+      Welcome to <span class="decoration-wavy decoration-indigo-400 underline-offset-4 h-10">ProjectDock <%= user ? user.firstName : '' %>!....</span>
+      </h1>
+      <style>
+        @keyframes slideFadeIn {
+          from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.96);
+          }
+          to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+          }
+        }
+        .animate-slide-fade-in {
+          animation: slideFadeIn 2.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+      </style>
+
+      <hr class="border-t-4 border-indigo-300 rounded-full shadow-lg w-2/3 mx-auto mb-12">
+
+      <section class="mb-16 text-center space-y-6">
+      <p class="text-xl sm:text-2xl text-gray-800 leading-relaxed bg-gradient-to-r from-lime-100 via-teal-100 to-indigo-100 rounded-xl p-6 shadow-inner border border-black font-serif italic" style="font-family: cursive">
+        <span class="font-extrabold text-indigo-700 text-3xl block mb-4">
+          About Project Dock
+        </span>
+        <span class="text-gray-800" style="font-family: cursive, serif;">
+         ProjectDock is a dynamic project management and submission portal designed for educational institutions and teams. It allows students to submit their project titles, descriptions, and PDF reports, while administrators/admins can manage, review, and update each project's status from a secure dashboard.
+          <br>
+This platform was built with scalability, simplicity, and real-time tracking in mind. Cloudinary integration ensures that all project reports are securely uploaded and accessible via public URLs without storing large files on the server.<br>
+      </p>
+      <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&display=swap" rel="stylesheet">
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-gradient-to-br from-pink-100 via-yellow-50 to-blue-100 rounded-3xl shadow-2xl border-4 border-indigo-400 overflow-hidden">
+            <thead>
+            <tr>
+              <th class="px-8 py-5 text-2xl font-bold text-white border-b-4 border-indigo-400 text-center bg-gradient-to-r from-indigo-500 via-teal-400 to-lime-400 tracking-wider shadow-2xl rounded-tl-3xl rounded-tr-3xl drop-shadow-xl">
+              🌟 Features
+              </th>
+              <th class="px-8 py-5 text-2xl font-bold text-white border-b-4 border-indigo-400 text-center bg-gradient-to-r from-indigo-500 via-teal-400 to-lime-400 tracking-wider shadow-2xl rounded-tr-3xl drop-shadow-xl">
+              💡 Description
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="hover:scale-105 hover:bg-pink-100/80 transition-all duration-300 cursor-pointer">
+              <td class="px-6 py-5 text-3xl text-lime-700 text-center drop-shadow-xl font-extrabold">🧑‍🎓</td>
+              <td class="px-6 py-5 text-lg text-indigo-900 text-center font-bold">
+              Students can <span class="text-indigo-700 underline decoration-wavy decoration-2">register</span> and <span class="text-indigo-700 underline decoration-wavy decoration-2">log in</span>
+              </td>
+            </tr>
+            <tr class="hover:scale-105 hover:bg-yellow-100/80 transition-all duration-300 cursor-pointer">
+              <td class="px-6 py-5 text-3xl text-blue-700 text-center drop-shadow-xl font-extrabold">🔑</td>
+              <td class="px-6 py-5 text-lg text-blue-900 text-center font-bold">
+              Admins can <span class="text-blue-700 underline decoration-wavy decoration-2">log in</span>
+              </td>
+            </tr>
+            <tr class="hover:scale-105 hover:bg-teal-100/80 transition-all duration-300 cursor-pointer">
+              <td class="px-6 py-5 text-3xl text-teal-700 text-center drop-shadow-xl font-extrabold">➕</td>
+              <td class="px-6 py-5 text-lg text-teal-900 text-center font-bold">
+              Students can <span class="text-teal-700 underline decoration-wavy decoration-2">add</span> their projects
+              </td>
+            </tr>
+            <tr class="hover:scale-105 hover:bg-lime-100/80 transition-all duration-300 cursor-pointer">
+              <td class="px-6 py-5 text-3xl text-yellow-700 text-center drop-shadow-xl font-extrabold">✏️</td>
+              <td class="px-6 py-5 text-lg text-yellow-900 text-center font-bold">
+              Students can <span class="text-yellow-700 underline decoration-wavy decoration-2">edit</span> and <span class="text-yellow-700 underline decoration-wavy decoration-2">delete</span> their projects
+              </td>
+            </tr>
+            <tr class="hover:scale-105 hover:bg-lime-100/80 transition-all duration-300 cursor-pointer">
+              <td class="px-6 py-5 text-3xl text-yellow-700 text-center drop-shadow-xl font-extrabold">💬</td>
+              <td class="px-6 py-5 text-lg text-yellow-900 text-center font-bold">
+              Students can <span class="text-yellow-700 underline decoration-wavy decoration-2">add comments</span> to projects
+              </td>
+            </tr>
+            <tr class="hover:scale-105 hover:bg-green-100/80 transition-all duration-300 cursor-pointer">
+              <td class="px-6 py-5 text-3xl text-green-700 text-center drop-shadow-xl font-extrabold">✅</td>
+              <td class="px-6 py-5 text-lg text-green-900 text-center font-bold">
+              Admins <span class="text-green-700 underline decoration-wavy decoration-2">approve</span> student projects
+              </td>
+            </tr>
+            <tr class="hover:scale-105 hover:bg-red-100/80 transition-all duration-300 cursor-pointer">
+              <td class="px-6 py-5 text-3xl text-red-700 text-center drop-shadow-xl font-extrabold">🗑️</td>
+              <td class="px-6 py-5 text-lg text-red-900 text-center font-bold">
+              Admins can <span class="text-red-700 underline decoration-wavy decoration-2">delete</span> projects
+              </td>
+            </tr>
+             <tr class="hover:scale-105 hover:bg-red-100/80 transition-all duration-300 cursor-pointer">
+              <td class="px-6 py-5 text-3xl text-red-700 text-center drop-shadow-xl font-extrabold">👤</td>
+              <td class="px-6 py-5 text-lg text-red-900 text-center font-bold">
+              Admins can <span class="text-red-700 underline decoration-wavy decoration-2">add new admins</span>
+              </td>
+            </tr>
+            <tr class="hover:scale-105 hover:bg-red-100/80 transition-all duration-300 cursor-pointer">
+              <td class="px-6 py-5 text-3xl text-red-700 text-center drop-shadow-xl font-extrabold">🗑️</td>
+              <td class="px-6 py-5 text-lg text-red-900 text-center font-bold">
+                Admins can <span class="text-red-700 underline decoration-wavy decoration-2">delete student comments</span>
+              </td>
+            </tr>
+            </tbody>
+            </tr>
+          </tbody>
+        </table>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+      </section>
+      <div class="flex justify-center">
+      <a href="/" class="px-10 py-4 bg-gradient-to-r from-indigo-500 via-teal-500 to-lime-400 text-white rounded-full shadow-xl hover:scale-105 transition-all duration-300 font-bold text-lg border-2 border-white hover:border-teal-400">
+        Browse Projects
+      </a>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>

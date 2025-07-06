@@ -1,0 +1,35 @@
+<%- include('../partials/head') %>
+  </head>
+  <body class="bg-gradient-to-br from-pink-200 via-yellow-100 to-blue-200 min-h-screen font-sans">
+    <%- include('../partials/nav') %>
+      <div class="mt-10 bg-gradient-to-br from-pink-200 via-yellow-100 to-blue-200 min-h-screen font-sans w-full h-full">
+        <h2 class="text-4xl font-extrabold text-center text-red-600 mb-10 tracking-tight">
+          Hey Host! Here you can delete your Uploaded Posts:
+        </h2>
+        <div class="flex flex-wrap justify-center gap-6">
+          <% registeredPosts.forEach(post => { %>
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 w-full max-w-xs flex flex-col">
+              <img src="<%= post.photo %>" alt="<%= post.title %>" class="w-full h-48 object-cover rounded-t-xl">
+              <div class="p-5 flex flex-col flex-1">
+                <h3 class="text-2xl font-bold text-gray-800 mb-2"><%= post.title %></h3>
+                <p class="text-gray-500 mb-4 flex items-center justify-between">
+                  <span>Author: <%= post.authorName %></span>
+                </p>
+                <div class="flex justify-between items-center mb-4">
+                  <span class="text-xl font-bold text-red-500"><%= post.category %> <span class="text-sm font-normal text-gray-400"></span></span>
+                  <div class="flex items-center">
+                    <span class="text-gray-700 font-medium">
+                      <%= new Date(post.createdAt).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' }) %>
+                    </span>
+                  </div>
+                </div>
+                <div class="flex gap-3 mt-auto">
+                  <a href="/host/delete-post/<%=post._id%>" class="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg text-center font-semibold transition">Delete Post</a>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+  </body>
+</html>

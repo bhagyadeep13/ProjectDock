@@ -1,0 +1,128 @@
+<%- include('../partials/head') %>
+</head>
+<body class="min-h-screen font-sans bg-gradient-to-br from-pink-200 via-yellow-100 to-blue-200 bg-fixed bg-no-repeat bg-center text-gray-900">
+    <%- include('../partials/nav') %>
+    <%- include('../partials/toast') %>
+    <main class="container mx-auto mt-12 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+  <div class="bg-red-300 rounded-3xl shadow-2xl p-10 sm:p-14 w-full max-w-5xl border-4 border-black">
+    <h2 class="text-5xl font-extrabold text-center text-cyan-800 mb-10 tracking-tight drop-shadow-lg">
+    Details of <%= project.title %> 
+    </h2>
+
+    <div class="grid grid-cols-1 gap-8">
+    <!-- Student -->
+    <div class="pb-4 border-b border-black flex flex-col sm:flex-row justify-between items-center gap-6">
+      <div>
+        <h3 class="text-xl font-bold text-cyan-600 mb-1 flex items-center gap-2">👨‍🎓 Student</h3>
+        <p class="text-lg font-medium text-cyan-900"><%= project.Name || 'N/A' %></p>
+      </div>
+      <div>
+        <h3 class="text-xl font-bold text-cyan-600 mb-1 flex items-center gap-2">✉️ Email</h3>
+        <p class="text-lg font-medium text-cyan-900"><%= project.Email || 'N/A' %></p>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="pb-4 border-b border-black">
+      <h3 class="text-xl font-bold text-cyan-600 mb-2 flex items-center gap-2">📝 Description</h3>
+      <p class=" bg-purple-50 text-base text-cyan-800 leading-relaxed rounded-lg p-4 shadow-inner"><%= project.description %></p>
+    </div>
+
+    <!-- Technologies Used -->
+    <div class="pb-4 border-b border-black">
+        <h3 class="text-xl font-bold text-cyan-600 mb-3 flex items-center gap-2">💻 Technologies Used</h3>
+        <div class="flex flex-wrap gap-3 text-base text-cyan-800">
+        <% project.technologiesUsed.forEach(function(tech) { %>
+        <span class="bg-purple-50 px-4 py-1 rounded-full shadow hover:bg-cyan-300 transition-all border border-cyan-500"><%= tech %></span>
+        <% }) %>
+        </div>
+    </div>
+
+    <!-- Status -->
+    <div class="pb-4 border-b border-black">
+      <h3 class="text-xl font-bold text-cyan-600 mb-2 flex items-center gap-2">📌 Status</h3>
+      <p class="text-base font-semibold text-cyan-800"><%= project.status %></p>
+    </div>
+
+    <!-- Created At -->
+    <div class="pb-4 border-b border-black">
+      <h3 class="text-xl font-bold text-cyan-600 mb-2 flex items-center gap-2">📅 Created At</h3>
+      <p class="text-base font-semibold text-cyan-800"><%= new Date(project.createdAt).toLocaleDateString() %></p>
+    </div>
+
+    <!-- GitHub Link -->
+    <div class="pb-4 border-b border-red-300">
+      <h3 class="text-xl font-bold text-cyan-600 mb-2 flex items-center gap-2">🔗 GitHub Link</h3>
+      <% if(project.githubLink) { %>
+        <a href="<%= project.githubLink %>" class="inline-flex items-center gap-2 text-cyan-700 font-medium hover:underline hover:text-cyan-900 transition" target="_blank">
+           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <%= project.githubLink %>
+        </a>
+      <% } else { %>
+        <span class="text-gray-400">N/A</span>
+      <% } %>
+    </div>
+
+    <!-- Deployed Link -->
+    <div class="pb-4 border-b border-black">
+      <h3 class="text-xl font-bold text-cyan-600 mb-2 flex items-center gap-2">🚀 Deployed Link</h3>
+      <% if(project.deployedLink) { %>
+        <a href="<%= project.deployedLink %>" class="inline-flex items-center gap-2 text-cyan-700 font-medium hover:underline hover:text-cyan-900 transition" target="_blank">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <%= project.deployedLink %>
+        </a>
+      <% } else { %>
+        <span class="text-gray-400">N/A</span>
+      <% } %>
+    </div>
+
+    <!-- Report -->
+    <div>
+      <h3 class="text-xl font-bold text-purple-800 mb-2 flex items-center gap-2">📄 Report</h3>
+      <% if(project.Report) { %>
+        <a href="<%= project.Report %>" target="_blank" class="inline-flex items-center gap-2 mt-1 px-5 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-400 transition shadow-lg">
+        ⬇️ view Report
+        </a>
+      <% } else { %>
+        <span class="text-gray-400">No Report Uploaded</span>
+      <% } %>
+    </div>
+    </div>
+
+     <!-- Comments Section -->
+    <div class="mt-12 border-black border-t pt-8 ">
+    <h3 class="text-3xl font-bold text-purple-600 mb-4 flex items-center gap-2">💬 Comments</h3>
+    <div class="space-y-4 mb-6">
+      <% if (project.comments && project.comments.length > 0) { %>
+        <% project.comments.forEach(function(comment) { %>
+        <div class="bg-purple-50 rounded-lg p-4 shadow flex flex-col gap-2 border-2 border-black">
+          <div class="flex items-center gap-2 mb-1 justify-between">
+        <span class="font-semibold text-purple-800"><span class="text-black">Commented By:</span> <%= comment.author %></span>
+        <% if(user && user.userType === 'admin') { %>
+        <form action="/delete-comment" method="POST" onsubmit="return confirm('Are you sure you want to delete this comment?');">
+          <input type="hidden" name="projectId" value="<%= project._id %>">
+          <input type="hidden" name="author" value="<%= comment.author %>">
+          <input type="hidden" name="text" value="<%= comment.text %>">
+          <button type="submit" class="bg-red-300 rounded-lg hover:text-red-900 font-bold px-2 py-1 rounded transition">Delete</button>
+        </form>
+        <% } %>
+          </div>
+          <p class="text-purple-900"><%= comment.text %></p>
+        </div>
+        <% }) %>
+      <% } else { %>
+        <p class="text-gray-500">No comments yet. Be the first to comment!</p>
+      <% } %>
+    </div>
+    <form action="/add-comment" method="POST" class="border pt-8 border-4 border-black rounded-lg p-6 shadow flex flex-col gap-4 bg-pink-200">
+      <input type="hidden" name="projectId" value="<%= project._id %>" />
+      <input type="text" name="author" placeholder="Enter Your Name" required class="border border-purple-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white/80" />
+      <textarea name="text" placeholder="Add a comment..." required class="border border-purple-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white/80"></textarea>
+      <button type="submit" class="self-end px-6 py-2 bg-purple-500 text-white font-semibold rounded hover:bg-purple-200 hover:text-black transition">Post Comment</button>
+    </form>
+    </div>
+     </div>
+    <!-- End Comments Section -->
+    </main>
+</body>
+</html>
