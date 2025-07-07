@@ -2,7 +2,7 @@
 
 [![Deploy on Render](https://img.shields.io/badge/Deploy%20on-Render-3f3f3f?logo=render&style=for-the-badge)](https://blognest-8.onrender.com)
 
-**ProjectDock** is a full-stack blogging platform built with:
+**ProjectDock** is a full-stack platform built with:
 
 - **Node.js**
 - **Express.js**
