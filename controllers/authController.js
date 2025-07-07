@@ -72,6 +72,7 @@ exports.postLogIn = async (req, res, next) => {
       req.session.IsLoggedIn = true;
       await req.session.save();
       res.redirect("/about"); // Redirect to the home page after successful login
+      return;
     }
   }
   else 
