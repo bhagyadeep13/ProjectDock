@@ -150,13 +150,14 @@ exports.getSignUp = (req, res, next) => {
     currentPage: "signup",
     IsLoggedIn: false,
     error: [],
+    toastMessage: null,
     oldInput: {
       firstName: '',
       lastName: '',
       email: '',
       password: '',
       confirmPassword: '',
-      userType: ''
+      userType: '',
     }
 })
 };
@@ -227,7 +228,8 @@ exports.postSignUp = [
           password: password,
           userType: userType
         },
-        user: {}
+        user: {},
+        toastMessage: null
       });
     }
         const exists = await User.exists({ email: email});
@@ -242,7 +244,8 @@ exports.postSignUp = [
                   lastName: lastName,
                   email: email,
                   userType: userType 
-            }
+            },
+            toastMessage: null,
           });  
           }
         const hashedPassword = await bcrypt.hash(password, 12);
