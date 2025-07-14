@@ -13,6 +13,7 @@ hostRouter.get("/edit-project", hostController.getEditProject);
 hostRouter.post("/edit-project", upload.single("pdf"), hostController.postEditProject);
 hostRouter.get("/delete-project", hostController.getDeleteProject);
 hostRouter.post("/add-comment", hostController.postAddComment);
+hostRouter.get("/notifications", hostController.getNotification);
 hostRouter.post("/delete-comment", hostController.postDeleteComment);
 
 module.exports = hostRouter;

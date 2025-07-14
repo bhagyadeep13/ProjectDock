@@ -39,6 +39,7 @@ exports.getHostProjects = async (req, res, next) => {
       const userId = req.session.user._id;
       const user = await User.findById(userId)
       .populate('Projects')
+      console.log("User Projects: h ki nhi ", user.Projects);
       const toastMessage = req.session.toastMessage;
       req.session.toastMessage = null; // Clear the toast message before rendering
       await req.session.save();
@@ -131,36 +132,43 @@ exports.postEditProject = async (req, res, next) => {
   }
 
 exports.getDeleteProject = async (req, res, next) => {
+  const projectId = req.query.projectId;
+  const project = await Project.findByIdAndDelete(projectId);
 
-     const projectId = req.query.projectId;
-      const project = await Project.findByIdAndDelete(projectId);
-    if(project)
-    {
-      const userId = req.session.user._id; // user ID is stored in session
-      const user = await User.findById(userId);
-      if(user)
-      {
-        user.Projects = user.Projects.filter(
-          (projectId) => String(projectId) !== String(project._id)
-        );
-        console.log("Project removed from user's projects successfully");
-        await user.save();
-        req.session.toastMessage = {type: 'error', text: 'Project deleted successfully!.'};
-        await req.session.save();
-        res.redirect("/");
+  if (project) {
+    const userId = req.session.user._id; // User ID from session
+    const user = await User.findById(userId);
+
+    if (user) {
+
+      user.Projects = user.Projects.filter(
+        (pid) => String(pid) !== String(project._id)
+      );
+
+      console.log("Project removed from user's projects successfully");
+
+      await user.save();
+
+      req.session.toastMessage = {
+        type: 'error',
+        text: 'Project deleted successfully!.'
       };
+
+      await req.session.save();
+      return res.redirect("/");
     }
-    else
-    {
-      res.render('404', {
-        pageTitle: "Error",
-        currentPage: "Error",
-        IsLoggedIn : req.session.IsLoggedIn,
-        user: req.session.user,
-        message: "User not found"
-      });
-    }
-}
+  }
+
+  // If project not found or user not found
+  res.status(404).render('404', {
+    pageTitle: "Error",
+    currentPage: "Error",
+    IsLoggedIn: req.session.IsLoggedIn,
+    user: req.session.user,
+    message: "User or project not found"
+  });
+};
+
 exports.postAddComment = async (req, res, next) => 
   {
   const projectId = req.body.projectId;
@@ -224,3 +232,29 @@ exports.postAddComment = async (req, res, next) =>
     res.status(404).send("Project not found");
   }
 }
+
+exports.getNotification = async (req, res, next) => {
+  const userId = req.session.user._id;
+  const user = await User.findById(userId);
+  
+  if (user) {
+    res.render("host/notifications", {
+      notifications: user.notifications,
+      pageTitle: "Notifications",
+      currentPage: "Notifications",
+      IsLoggedIn: req.session.IsLoggedIn,
+      user: req.session.user,
+      toastMessage: null,
+    });
+  }
+  else {
+    res.render('404', {
+      pageTitle: "Error",
+      currentPage: "Error",
+      IsLoggedIn : req.session.IsLoggedIn,
+      user: req.session.user,
+      message: "User not found for notifications",
+      toastMessage: null
+    });
+  }
+};

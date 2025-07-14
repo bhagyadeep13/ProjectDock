@@ -3,6 +3,7 @@ const { check, validationResult } = require("express-validator");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const e = require("express");
+const { use } = require("react");
 
 exports.getLogIn = (req, res, next) => {
   const toastMessage = req.session.toastMessage;
@@ -28,10 +29,28 @@ exports.postLogIn = async (req, res, next) => {
   const { email, password ,editing,userType} = req.body;
   console.log(email, password);
 
+  const reqUrl = req.path;
   const user = await User.findOne({ email: email });
   console.log("User: Kyu nhi mila", user);
     if (!user) {
-      return res.status(401).render("auth/login", {
+      console.log("User not found",reqUrl);
+      if(reqUrl === '/admin-login') {
+        return res.status(401).render("auth/adminLogin", {
+          pageTitle: "Admin Login Page",
+          currentPage: "admin-login",
+          IsLoggedIn: false,
+          error: ["Invalid email or password"],
+          oldInput: {
+            email: email,
+            password: password
+          },
+          toastMessage: null,
+          user: {}
+        });
+      }
+      else
+      {
+        return res.status(401).render("auth/login", {
         pageTitle: "Login Page",
         currentPage: "Login",
         IsLoggedIn: false,
@@ -44,6 +63,7 @@ exports.postLogIn = async (req, res, next) => {
         user: {}
       });
     }
+  }
 // If editing is false, it means the user is trying to log in as a regular user
     if(!editing && !userType) 
     {
@@ -260,13 +280,14 @@ exports.postSignUp = [
             password: hashedPassword,
             userType: 'admin'
           });
-        } else {
+        } 
+        else {
           newUser = new User({
             firstName: firstName,
             lastName: lastName,
             email: email,
             password: hashedPassword,
-            userType: userType
+            userType: 'student'
           });
         }
         await newUser.save();

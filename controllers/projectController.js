@@ -3,6 +3,10 @@ const project = require("../models/Project");
 
 exports.getIndex = async (req, res, next) => {
   const p = await project.find();
+
+const exists = await project.exists({ _id: '68752d74e4c599628aa2bf85' });
+console.log('Exists?', exists);
+
   if (!p || p.length === 0) {
     console.log("No projects found");
   }
@@ -124,11 +128,23 @@ exports.postUpdateStatus = async (req, res, next) => {
   const status = req.body.status;
 
   const Project = await project.findById(projectId);
+
   console.log("Project to update:", Project);
   if (!Project) {
     console.log("Project not found for updating status.");
     return res.redirect("/update-status");      
   }
+  const student = await User.findOne({ email: Project.Email });
+  console.log("Student to update: Mila Kya", student);
+
+if (student) {
+  student.notifications.push(`Your project status has been changed to "${status}".`);
+
+  await student.save();
+} else {
+  console.warn("⚠️ Student not found for email:", Project.Email);
+}
+
   Project.status = status;
   await Project.save();
   req.session.toastMessage = {type: 'success', text: 'Status updated successfully!.'};

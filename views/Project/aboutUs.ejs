@@ -3,27 +3,13 @@
 <body class="bg-gradient-to-br from-pink-200 via-yellow-100 to-blue-200 min-h-screen font-sans antialiased">
   <%- include('../partials/nav') %>
   <%- include('../partials/toast') %>
+  <%- include('../partials/animation') %>
   <main class="container mx-auto mt-12 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
     <div class="bg-red-300 rounded-3xl shadow-2xl p-10 sm:p-14 w-full max-w-7xl border-4 border-black">
       
       <h1 class="text-5xl font-extrabold text-center bg-clip-text bg-blue-500 mb-10 drop-shadow-md opacity-0 animate-slide-fade-in">
       Welcome to <span class="decoration-wavy decoration-indigo-400 underline-offset-4 h-10">ProjectDock <%= user ? user.firstName : '' %>!....</span>
       </h1>
-      <style>
-        @keyframes slideFadeIn {
-          from {
-        opacity: 0;
-        transform: translateY(40px) scale(0.96);
-          }
-          to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-          }
-        }
-        .animate-slide-fade-in {
-          animation: slideFadeIn 2.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-        }
-      </style>
 
       <hr class="border-t-4 border-indigo-300 rounded-full shadow-lg w-2/3 mx-auto mb-12">
 

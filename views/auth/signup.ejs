@@ -4,6 +4,25 @@
 >
   <%- include('../partials/nav') %>
   <%- include('../partials/toast') %>
+  <style>
+        @keyframes slideFadeIn {
+          from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.96);
+          }
+          to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+          }
+        }
+        .animate-slide-fade-in {
+          animation: slideFadeIn 2.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+        main {
+          opacity: 0;
+          animation: slideFadeIn 2.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+      </style>
   <main class="container mx-auto flex flex-col items-center justify-center min-h-[80vh]">
     <div class="bg-pink-100 w-full max-w-2xl rounded-3xl shadow-2xl p-10 mt-12 border-4 border-black backdrop-blur-md z-2xl">
       <h1 class="text-4xl font-extrabold mb-8 text-center text-purple-700 drop-shadow">Register as a Student</h1>

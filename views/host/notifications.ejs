@@ -1,0 +1,39 @@
+<%- include('../partials/head') %>
+    </head>
+    <body class="bg-gradient-to-br from-pink-200 via-yellow-100 to-blue-200 min-h-screen font-sans w-full h-full">
+        <%- include('../partials/nav') %>
+        <%- include('../partials/toast') %>
+        <div class="mt-6 flex justify-center">
+            <div class="w-full max-w-4xl bg-blue-50 bg-pink-100 rounded-3xl shadow-2xl p-10 border-4 border-black">
+                <h2 class="text-4xl font-extrabold text-center text-purple-700 mb-6 tracking-tight drop-shadow-lg border-b-2 border-black pb-4">
+                    Notifications
+                </h2>
+                <div class="flex justify-center px-4">
+                    <div class="overflow-x-auto w-full">
+                        <table class="min-w-full bg-white/80 rounded-2xl shadow-xl">
+                            <thead>
+                                <tr class="bg-gradient-to-r from-pink-200 via-yellow-100 to-blue-200 text-purple-800 text-lg">
+                                    <th class="px-6 py-3 text-left font-bold">Message</th>
+                                    <th class="px-6 py-3 text-left font-bold">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% notifications.forEach((note, idx) => { %>
+                                <tr class="border-b border-gray-200 hover:bg-yellow-50 transition duration-200">
+                                    <td class="px-6 py-4 text-xl text-purple-800 text-base">
+                                        <span class="font-bold mr-2"><%= idx + 1 %>.</span>
+                                        <%= note %>
+                                    </td>
+                                    <td class="px-6 py-4 text-lg text-gray-500">
+                                        <%= new Date().toLocaleDateString() %>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
